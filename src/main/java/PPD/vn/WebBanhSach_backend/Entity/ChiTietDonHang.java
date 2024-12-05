@@ -11,7 +11,7 @@ public class ChiTietDonHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_chi_tiet_don_hang")
-    private long maChiTietGioHang;
+    private long maChiTietDonHang;
     @Column(name = "so_luong")
     private int soLuong ;
     @Column(name = "gia_ban")
