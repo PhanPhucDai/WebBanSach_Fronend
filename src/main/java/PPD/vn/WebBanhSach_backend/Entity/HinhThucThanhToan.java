@@ -15,7 +15,7 @@ public class HinhThucThanhToan {
     @Column(name = "ten_hinh_thuc_thanh_toan")
     private String tenHinhThucThanhToan;
     @Column(name = "mo_ta ")
-    private  String mota;
+    private String mota;
     @Column(name = "chi_phi_thanh_toan ")
     private double chiPhiThanhToan;
     @OneToMany(

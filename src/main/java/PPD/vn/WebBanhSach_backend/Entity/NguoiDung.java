@@ -20,8 +20,8 @@ public class NguoiDung {
     private String tenDangNhap;
     @Column(name = "mat_khau",length = 512)
     private String matKhau;
-    @Column(name = "gioi_tinh")
-    private char gioiTinh;
+    @Column(name = "gioi_tinh", length = 1)
+    private String gioiTinh;
     @Column(name = "email")
     private String email;
     @Column(name = "so_dien_thoai")

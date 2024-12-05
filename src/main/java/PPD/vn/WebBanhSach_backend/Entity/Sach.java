@@ -2,12 +2,14 @@ package PPD.vn.WebBanhSach_backend.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
+
+@Data
 @Entity
 @Table(name = "sach")
-@Data
 public class Sach {
     //Cấu hình Databasa bảng sách
     @Id
@@ -20,7 +22,7 @@ public class Sach {
     private String tenTacGia;
     @Column(name = "isbn",length = 255)
     private String ISBN;
-    @Column(name = "mo_ta", columnDefinition = "text")
+    @Column(name = "mo_ta")
     private String moTa;
     @Column(name = "gia_niem_yet")
     private double giaNiemYet;

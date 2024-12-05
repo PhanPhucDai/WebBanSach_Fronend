@@ -10,7 +10,7 @@ public class SuDanhGia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ma_danh_gia")
     private long maDanhGia;
-    @Column(name="diem_xe_phang")
+    @Column(name="diem_xe_hang")
     private float diemXepHang;
     @Column(name="nhan_xet")
     private String nhanXet;

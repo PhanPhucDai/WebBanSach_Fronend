@@ -32,7 +32,7 @@ public class DonHang {
                     CascadeType.ALL
             }
     )
-    private List<ChiTietDonHang> danhSachChiTietDioHang;
+    private List<ChiTietDonHang> danhSachChiTietDonHang;
     @ManyToOne(
             cascade = {
                     CascadeType.PERSIST,
