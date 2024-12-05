@@ -6,6 +6,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 public class RepositoryRestConfig implements RepositoryRestConfigurer  {
@@ -13,12 +14,11 @@ public class RepositoryRestConfig implements RepositoryRestConfigurer  {
     @Autowired
     private EntityManager entityManager;
 
-
-    
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        // Tự động expose ID của các entity (bằng cách mở rộng đường dẫn URI)
+    @Override
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config.exposeIdsFor(entityManager.getMetamodel().getEntities().stream()
                 .map(EntityType::getJavaType)  // Sử dụng EntityType để lấy class của entity
                 .toArray(Class[]::new));  // Expose the IDs of specific entities
     }
+
 }

@@ -1,4 +1,4 @@
-package PPD.vn.WebBanhSach_backend.Dao;
+package PPD.vn.WebBanhSach_backend.Rest;
 
 import PPD.vn.WebBanhSach_backend.Entity.SuDanhGia;
 import PPD.vn.WebBanhSach_backend.Entity.TheLoai;
