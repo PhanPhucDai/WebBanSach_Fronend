@@ -1,0 +1,31 @@
+ 
+    table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .header-input {
+        width: 100%;
+        box-sizing: border-box;
+        font-weight: bold;
+        border: none;
+        outline: none;
+        text-transform: uppercase;
+      }
+      
+      #myTable{
+        margin-top: 30px;
+      }
+      
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      
+      .editable-cell {
+        background-color: #f2f2f2;
+        outline: none
+      }
+                        
+    
+    
