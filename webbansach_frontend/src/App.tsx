@@ -15,7 +15,8 @@ import Cart from './component/cart/Cart';
 import GioHang from './models/GioHang';
 import { chiTietGioHang } from './api/GioHang';
 import ThemGioHang from './models/ThemGioHang';
-
+import Paymoney from './component/PayMoney/PayMoneyUntill';
+  
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
       setchiTietItem(await chiTietGioHang());
     }
     gioHang();
-  }, []);
+  }, [GioHang]);
 
   const xoaSanPhamGioHang = async (Sach: GioHang) => {
     const reponse = await fetch('http://localhost:8080/gio-hang/xoa-san-pham-gio-hang'
@@ -38,11 +39,11 @@ function App() {
         }
         , body: JSON.stringify(Sach)
       });
-
-
     if (!reponse.ok) {
+      
       console.error("Bị lỗi trong quá trình xóa", reponse.text);
     } else {
+      console.log("Đã xóa")
       const item = await chiTietGioHang();
       setchiTietItem(item);
     }
@@ -86,6 +87,7 @@ function App() {
           <Route path="/gio-hang" element={<Cart xoaSanPhamTrongGioHang={xoaSanPhamGioHang} />}></Route>
           <Route path="/dang-nhap" element={<DangNhap />} />
           <Route path="/Test1" element={<Test1 />} />
+          <Route path="/thanh-toan" element={<Paymoney/>} /> 
           <Route path="/kich-hoat/:email/:maKichHoat" element={<KichHoatTaiKhoan />} />
           <Route path="/admin/sach-form" element={<SachForm />} />
         </Routes>

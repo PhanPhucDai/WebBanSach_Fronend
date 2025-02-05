@@ -1,8 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GioHang from "../../models/GioHang";
+import { dinhDang } from "../utils/DinhDangSo";
 import { chiTietGioHang } from "../../api/GioHang";
 import ChiTietGioHang from "./ComponentCart/ChiTietGioHang";
+import Paymoney from "../PayMoney/PayMoneyUntill";
 interface GioHanginter {
   xoaSanPhamTrongGioHang: (Sach: GioHang) => Promise<void>
 }
@@ -11,13 +13,13 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
   const [chiTietItem, setchiTietItem] = useState<GioHang[]>([]);
   const [baoLoi, setbaoLoi] = useState('');
 
-
   useEffect(() => {
     async function layChiTietGioHang() {
       const item = await chiTietGioHang();
       setchiTietItem(item);
     }
     layChiTietGioHang();
+
   }, [])
 
   const tangSoLuong = async (Sach: GioHang) => {
@@ -40,37 +42,69 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
   }
 
   const giamSoLuong = async (Sach: GioHang) => {
-    const reposne = await fetch("http://localhost:8080/gio-hang/xoa-so-luong", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(Sach)
+    if (Sach.soluong > 1) {
+      const reposne = await fetch("http://localhost:8080/gio-hang/xoa-so-luong", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(Sach)
+      }
+      )
+      if (!reposne.ok) {
+        setbaoLoi(reposne.body + "");
+      } else {
+        const item = await chiTietGioHang();
+        setchiTietItem(item);
+      }
     }
-    )
-    if (!reposne.ok) {
-      setbaoLoi(reposne.body + "");
-    } else {
-      const item = await chiTietGioHang();
-      setchiTietItem(item);
-    }
+
   }
 
-  //Xóa sản phẩm trong giỏ hànghàng
+  //Xóa sản phẩm trong giỏ hàng
   const xoaSanPhamGioHang = async (Sach: GioHang) => {
-    xoaSanPhamTrongGioHang(Sach);
+    await xoaSanPhamTrongGioHang(Sach);
+    console.log("Đang xóa 1")
     const item = await chiTietGioHang();
+    console.log("Đang xóa 2")
     setchiTietItem(item);
-
   }
-  const [chonTatCa,setChonTatCa] = useState(false);
+  const [chonTatCa, setChonTatCa] = useState(false);
 
+  const [tongTien, setTongTien] = useState(0);
   const chonTatCaHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checkedEvent = e.target.checked;
-    console.log("chontatca",chonTatCa)
     setChonTatCa(checkedEvent);
-    }
 
+  }
+
+
+
+
+  useEffect(() => {
+
+    chiTietItem.forEach((e) => {
+      if (chonTatCa) { e.isChecked = chonTatCa }
+    })
+    if (!chonTatCa) {
+      chiTietItem.map((e) => { e.isChecked = chonTatCa })
+    }
+    setTongTien(0);
+    tinhTongTien();
+  }, [chonTatCa])
+
+  const tinhTongTien = () => {
+    setTongTien(0)
+    let tongTienMoi = 0;
+    chiTietItem.forEach((e) => {
+      if (e.isChecked) {
+        tongTienMoi += e.tongTienItem;
+      }
+    });
+
+    // Cập nhật trạng thái 'tongTien' sau khi tính toán xong
+    setTongTien(tongTienMoi);
+  }
 
   return (
     <div className="container">
@@ -113,7 +147,7 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
             <div className=" border-bottom row">
               <div className="col-6 d-flex align-items-center">
                 {/**Chọn tất cả sản phẩm trong giỏ hàng*/}
-                <input type="checkbox" id="select-all" onChange={chonTatCaHandle} checked={chonTatCa} className="form-check-input me-2 mb-1" style={{padding: '10px'}}/>
+                <input type="checkbox" id="select-all" onChange={chonTatCaHandle} checked={chonTatCa} className="form-check-input me-2 mb-1" style={{ padding: '10px' }} />
                 <label htmlFor="select-all" className="m-0"><h6 className="mb-0">Chọn tất cả</h6></label>
               </div>
 
@@ -121,19 +155,20 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
 
               <div className="col-3 text-center"><h6 className="mb-0">Tổng tiền</h6></div>
             </div>
-            <div  >
+            <div>{/***Chi tiết sản phẩm*/}
               {chiTietItem.map((item) => (
-                <ChiTietGioHang key={item.sach} Sach={item} giamSoLuong={giamSoLuong} tangSoLuong={tangSoLuong} xoaSanPham={xoaSanPhamGioHang} duocChonIn={chonTatCa}/>
+                <div>
+                  <ChiTietGioHang key={item.sach} tinhTongTien={tinhTongTien} Sach={item} giamSoLuong={giamSoLuong} tangSoLuong={tangSoLuong} xoaSanPham={xoaSanPhamGioHang} duocChonIn={chonTatCa} />
+                </div>
               ))}
             </div>
           </div>
-
           <div className="col-4 h-25">
             <div className="row h-50" style={{ backgroundColor: "var(--bs-secondary-bg)", borderRadius: "8px", }}>
               <div className="col-6 d-flex p-2  align-items-center"><h5 >Khuyến mãi</h5></div>
               <div className="col-4"></div>
-              <div className="col-2">
-                <span className="carousel-control-next-icon justify-content-center d-flex align-items-center" aria-hidden="true"></span>
+              <div className="col-2 d-flex position-relative" style={{ top: "8px" }}>
+                <span className="carousel-control-next-icon" ></span>
               </div>
             </div>
             <div className=" row mt-1" style={{ backgroundColor: "var(--bs-secondary-bg)", borderRadius: "8px", }}>
@@ -141,15 +176,44 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
               <hr />
               <div className="row justify-content-center">
                 <div className="col-6">Tổng Số Tiền (gồm VAT)</div>
-                <div className="col-6"><h5 className="text-center text-danger">500.000đ</h5></div>
-                <button className="btn btn-danger  mt-3 mb-2" style={{width:"300px"}}>
-                  <b style={{ fontSize: "18px"}}>Thanh toán</b>
-                  </button>
+                <div className="col-6"><h5 className="text-center text-danger">{dinhDang(tongTien)}đ </h5></div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {tongTien > 0 ? (
+                    <Link to="/thanh-toan" style={{ textDecoration: "none" }}>
+                      <button
+                        className="btn btn-danger mt-3 mb-2"
+                        style={{
+                          width: "300px",
+                          height: "50px", // Đảm bảo chiều cao cố định
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <b style={{ fontSize: "18px" }}>Thanh toán</b>
+                      </button>
+                    </Link>
+                  ) : (
+                    <div
+                      className="btn btn-danger mt-3 mb-2"
+                      style={{
+                        width: "300px",
+                        height: "50px", // Đảm bảo chiều cao cố định
+                        opacity: 0.5,
+                        cursor: "not-allowed",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <b style={{ fontSize: "18px" }}>Thanh toán</b>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </div>)}
     </div>
   );
 }

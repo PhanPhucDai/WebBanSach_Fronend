@@ -12,20 +12,20 @@ import { Link } from "react-router-dom";
 interface ChiTietGioHangProps {
   Sach: GioHang;
   duocChonIn: boolean;
+  tinhTongTien: () => void; 
   giamSoLuong: (Sach: GioHang) => void; 
   tangSoLuong: (Sach: GioHang) => void;  
   xoaSanPham: (Sach: GioHang) => void;
 }
 
 
-const ChiTietGioHang:React.FC<ChiTietGioHangProps> = ({ Sach, giamSoLuong, tangSoLuong, xoaSanPham, duocChonIn }) =>{
+const ChiTietGioHang:React.FC<ChiTietGioHangProps> = ({ Sach,tinhTongTien, giamSoLuong, tangSoLuong, xoaSanPham, duocChonIn }) =>{
   const maSach: number = Sach.sach;
   const [danhSachAnh, setDanhSachAnh] = useState<HinhAnhModels[]>([]);
   const [duLieuSach, setduLieuSach] = useState<SachModels>();
   const [duLieuAnh, setDuLieuAnh] = useState('');
   const [duocChon, setDuocChon] = useState(false);
-  const [tongTien, setTongTien] = useState(0);
-  useEffect(() => {
+   useEffect(() => {
     lay1HinhAnhCua1Sach(maSach)
       .then(
         kq => {
@@ -42,7 +42,7 @@ const ChiTietGioHang:React.FC<ChiTietGioHangProps> = ({ Sach, giamSoLuong, tangS
         }
       )
     if (duLieuSach?.giaBan) {
-      setTongTien(Sach.soluong * duLieuSach?.giaBan);
+       Sach.tongTienItem=Sach.soluong * duLieuSach?.giaBan;
     }
   }, [maSach, duLieuSach])
 
@@ -71,28 +71,24 @@ const ChiTietGioHang:React.FC<ChiTietGioHangProps> = ({ Sach, giamSoLuong, tangS
 
   useEffect (()=>{
     setDuocChon(duocChonIn);
+    tinhTongTien();
   },[duocChonIn])
   
   const boChonHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checkedEvent = e.target.checked; 
     setDuocChon(checkedEvent);
+    Sach.isChecked=checkedEvent;
+    tinhTongTien();
  }
 
   return (
-    
       <div className="container-fluit my-4" style={{width:"1300px"}}>
        
         <div className="row">
-          <div
-            className="col-8 p-3"
-            style={{
-              backgroundColor: "var(--bs-secondary-bg)",
-              borderRadius: "8px",
-            }}
-          >
+          <div className="col-8 p-3" style={{ backgroundColor: "var(--bs-secondary-bg)", borderRadius: "8px"}}>
             <div className="row align-items-center py-2 border-bottom">
               <div className="col-3 d-flex align-items-center">
-                <input className="form-check-input me-2" onChange={(e)=>boChonHandle(e)} checked={duocChon} type="checkbox" style={{ padding: '10px' }} />
+                <input className="form-check-input me-2" onChange={(e)=>boChonHandle(e)} checked={Sach.isChecked} type="checkbox" style={{ padding: '10px' }} />
                 <img title="hình ảnh" src={`${duLieuAnh}`} style={{ height: '120px', width: '120px', objectFit: 'cover' }} />
               </div>
 
@@ -114,7 +110,7 @@ const ChiTietGioHang:React.FC<ChiTietGioHangProps> = ({ Sach, giamSoLuong, tangS
               </div>
 
               <div className="col-2 text-center">
-                <span>{dinhDang(tongTien)}</span>
+                <span>{dinhDang(Sach.tongTienItem)}</span>
               </div>
               <div className="col-1 text-center">
                 <button title="deleteItem" className="btn btn-outline-danger p-0 border-0" type="button" onClick={xoaSanPhamHandle} >

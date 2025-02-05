@@ -96,16 +96,12 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem, soLuongGioHang}: NavbarPropt,
                                 {
                                     !daDangNhap ? (
                                         <div className="pe-auto">
-                                            <a
-                                                href="#"
-                                                className="d-flex justify-content-center text-dark text-decoration-none pe-auto"
-                                                data-bs-toggle="popover"
+                                            <a href="#" className="d-flex justify-content-center text-dark text-decoration-none pe-auto" data-bs-toggle="popover"
                                                 data-bs-placement="bottom"
                                                 data-bs-content="Vui lòng đăng nhập để xem giỏ hàng của bạn"
                                                 aria-controls="navbarSupportedContent"
                                                 aria-expanded="false"
-                                                aria-label="Toggle navigation"
-                                            >
+                                                aria-label="Toggle navigation">
                                                 <span className="navbar-icon"></span> Giỏ hàng
                                             </a>
                                         </div>
