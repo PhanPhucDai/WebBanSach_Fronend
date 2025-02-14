@@ -63,7 +63,7 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem, soLuongGioHang}: NavbarPropt,
         <div className="container-fluit ">
             <nav className="navbar navbar-expand-lg bg-body-tertiary  bg-body-tertiary">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">BookStore</a>
+                    <a className="navbar-brand" href="/">BookStore</a>
                     <button className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -76,7 +76,8 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem, soLuongGioHang}: NavbarPropt,
                                 <Link to="/0" className="nav-link dropdown-toggle text-black ms-5" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fa fa-book me-2"></i>Thể loại sách</Link>
                                 <ul className="dropdown-menu">
                                     <li>
-                                        {theLoai.map((theLoai) => (<li><Link className="dropdown-item" to={`/${theLoai.maTheLoai}`}>{`${theLoai.tenTheLoai}`}</Link></li>))}
+                                        {theLoai.map((theLoai)  => (<li><Link className="dropdown-item" to={`/${theLoai.maTheLoai}`}>{`${theLoai.tenTheLoai}`}</Link></li>)
+                                        )}
                                     </li>
                                 </ul>
                             </li>

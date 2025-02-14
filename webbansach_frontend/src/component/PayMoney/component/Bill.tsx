@@ -1,29 +1,40 @@
-const  Bill = () => {
+import React from "react";
+import { dinhDang } from "../../utils/DinhDangSo";
+
+interface phiGiaoHanginter{
+    phiGiaoHang: number;
+}
+
+const Bill  :React.FC<phiGiaoHanginter> = ({phiGiaoHang}) => {
 
     return (
-        <div className="container bg-white border rounded-2">
-            <div className="row d-flex flex-column align-items-end">
-                <div className="m-3">
-                    <div className="row">
-                        <div className="col-2">Thành tiền:</div>
-                        <div className="col-10">1 <b>đ</b></div>
-                    </div>
-                    <div className="row">
-                        <div className="col-2">Phí giao hàng:</div>
-                        <div className="col-10">1 <b>đ</b></div>
-                    </div>
-                    <div className="row">
-                        <div className="col-2">Tổng tiền:</div>
-                        <div className="col-10">1 <b>đ</b></div>
-                    </div>
+        <div className="container bg-white border border-dark rounded-2 pe-5">
+            <div className="row">
+                <div className="col text-end mb-2">
+                    <span className="me-2">Thành tiền:</span>
+                    <span>1 <b>đ</b></span>
                 </div>
-
             </div>
+            <div className="row">
+                <div className="col text-end mb-2">
+                    <span className="me-2">Phí giao hàng:   <b>{dinhDang(phiGiaoHang)}đ</b></span>
+                  
+                </div>
+            </div>
+            <div className="row">
+                <div className="col text-end">
+                    <span className="me-2 fw-bold">Tổng tiền:</span>
+                    <span className="fw-bold">1 <b>đ</b></span>
+                </div>
+            </div>
+
             <hr />
-            <div className="col-4 m-2">
-                <button type="button" className="btn-danger btn">Thanh toán</button>
+
+            <div className="text-end">
+                <button type="button" className="btn btn-danger">Thanh toán</button>
             </div>
         </div>
+
     )
 }
 export default Bill

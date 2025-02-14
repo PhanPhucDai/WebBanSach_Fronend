@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { rederRating } from "../../utils/SaoXepHang";
 import { dinhDang } from "../../utils/DinhDangSo";
 import { jwtDecode } from "jwt-decode";
-import GioHang from "../../../models/GioHang";
 import ThemGioHang from "../../../models/ThemGioHang";
 
 interface SachPropsInterface {
@@ -50,7 +49,8 @@ const SachProps: React.FC<SachPropsInterface> = ({ sach, themSanPhamGioHang }) =
             idNguoiDung = jwtDecodeToken.idUser;
         }
         if (idNguoiDung) {
-            const reponse = await fetch(`http://localhost:8080/nguoi-dung/${idNguoiDung}/GioHang`)
+            console.log(idNguoiDung)
+            const reponse = await fetch(`http://localhost:8080/nguoi-dung/${idNguoiDung}/gioHang`)
             const reponseJson = await reponse.json();
             console.log("reponseJson", reponse);
 

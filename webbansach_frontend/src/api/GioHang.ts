@@ -35,7 +35,7 @@ export async function chiTietGioHang(): Promise<GioHang[]> {
                         soluong: chiTietGioHang.soluong,
                         sach: chiTietGioHang.sach,
                         gioHang: chiTietGioHang.gioHang,
-                        isChecked: false,
+                        isChecked: 0,
                         tongTienItem: 0
                 });
         });
@@ -43,24 +43,21 @@ export async function chiTietGioHang(): Promise<GioHang[]> {
 
         return danhSachGioHang;
 }
-
-export async function xoaSanPhamGioHang(): Promise<GioHang[]> {
+ 
+export async function chiTietGioHangIsSelected(): Promise<GioHang[]> {
         const tokenJwt = localStorage.getItem('token');
         const danhSachGioHang: GioHang[] = [];
         let idUser = 0;
+        let data: GioHang[];
         if (tokenJwt) {
                 const jwtDeocode = jwtDecode<jwt>(tokenJwt);
                 idUser = jwtDeocode.idUser;
+        }else{
+             return    data = [];
         }
-        const respone =await fetch("http://localhost:8080/gio-hang/San-pham-gio-hang", {
-                method: "POST",
-                headers: {
-                        "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ maNguoiDung: idUser })
-        })
+        const respone =await fetch(`http://localhost:8080/gio-hang/Chi-tiet-gio-hang/isSelected?maNguoiDung=${idUser}`)
 
-        const data: GioHang[] = await respone.json();
+          data  = await respone.json();
        
         data.forEach((chiTietGioHang) => {
                 danhSachGioHang.push({
@@ -68,15 +65,11 @@ export async function xoaSanPhamGioHang(): Promise<GioHang[]> {
                         soluong: chiTietGioHang.soluong,
                         sach: chiTietGioHang.sach,
                         gioHang: chiTietGioHang.gioHang,
-                        isChecked: false,
-                        tongTienItem: 0,
+                        isChecked: 0,
+                        tongTienItem: 0
                 });
         });
 
 
         return danhSachGioHang;
 }
-
-
-
-

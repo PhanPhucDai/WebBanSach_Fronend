@@ -58,24 +58,3 @@ function updateData(row, col, value) {
     console.error("Invalid row or column index");
   }
 }
-
-function deleteRow(row) {
-  var table = document.getElementById("myTable");
-  table.deleteRow(row + 1); 
-  tableData.splice(row, 1);   
-}
-
-function updateRow(row) {
-  var table = document.getElementById("myTable");
-  var rowData = tableData[row];
-  var cells = table.rows[row + 1].cells;   
-  
-  for (var i = 0; i < rowData.length; i++) {
-    var value = cells[i].textContent.trim();
-    rowData[i] = value;   
-  }
-}
-
-function displayData() {
-  console.log(tableData);   
-}

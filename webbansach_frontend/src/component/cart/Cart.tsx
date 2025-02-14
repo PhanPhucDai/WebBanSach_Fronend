@@ -4,14 +4,12 @@ import GioHang from "../../models/GioHang";
 import { dinhDang } from "../utils/DinhDangSo";
 import { chiTietGioHang } from "../../api/GioHang";
 import ChiTietGioHang from "./ComponentCart/ChiTietGioHang";
-import Paymoney from "../PayMoney/PayMoneyUntill";
 interface GioHanginter {
   xoaSanPhamTrongGioHang: (Sach: GioHang) => Promise<void>
 }
 
 const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
   const [chiTietItem, setchiTietItem] = useState<GioHang[]>([]);
-  const [baoLoi, setbaoLoi] = useState('');
 
   useEffect(() => {
     async function layChiTietGioHang() {
@@ -32,7 +30,6 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
     }
     )
     if (!reposne.ok) {
-      setbaoLoi(reposne.body + "");
     } else {
       const item = await chiTietGioHang();
       setchiTietItem(item);
@@ -52,7 +49,6 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
       }
       )
       if (!reposne.ok) {
-        setbaoLoi(reposne.body + "");
       } else {
         const item = await chiTietGioHang();
         setchiTietItem(item);
@@ -64,22 +60,17 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
   //Xóa sản phẩm trong giỏ hàng
   const xoaSanPhamGioHang = async (Sach: GioHang) => {
     await xoaSanPhamTrongGioHang(Sach);
-    console.log("Đang xóa 1")
-    const item = await chiTietGioHang();
-    console.log("Đang xóa 2")
-    setchiTietItem(item);
+     const item = await chiTietGioHang();
+     setchiTietItem(item);
   }
-  const [chonTatCa, setChonTatCa] = useState(false);
+  const [chonTatCa, setChonTatCa] = useState(0);
 
   const [tongTien, setTongTien] = useState(0);
   const chonTatCaHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checkedEvent = e.target.checked;
-    setChonTatCa(checkedEvent);
+    setChonTatCa(checkedEvent == false ? 0 : 1);
 
   }
-
-
-
 
   useEffect(() => {
 
@@ -147,7 +138,7 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
             <div className=" border-bottom row">
               <div className="col-6 d-flex align-items-center">
                 {/**Chọn tất cả sản phẩm trong giỏ hàng*/}
-                <input type="checkbox" id="select-all" onChange={chonTatCaHandle} checked={chonTatCa} className="form-check-input me-2 mb-1" style={{ padding: '10px' }} />
+                <input type="checkbox" id="select-all" onChange={chonTatCaHandle} checked={chonTatCa != 0} className="form-check-input me-2 mb-1" style={{ padding: '10px' }} />
                 <label htmlFor="select-all" className="m-0"><h6 className="mb-0">Chọn tất cả</h6></label>
               </div>
 

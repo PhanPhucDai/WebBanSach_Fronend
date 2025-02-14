@@ -1,6 +1,6 @@
 import { useState } from "react";
  
-const CodePromotional = () => {
+const CodePromo = () => {
     const [response, setResponse] = useState("");  
 
     const codePromotional = () => {
@@ -29,4 +29,4 @@ const CodePromotional = () => {
     )
 }
 
-export default CodePromotional;
+export default CodePromo;

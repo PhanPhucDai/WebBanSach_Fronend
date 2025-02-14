@@ -1,7 +1,6 @@
 import React from "react";
 import SachModels from "../models/SachModels";
 import { my_request } from "./Request";
-import { Console } from "console";
 
 interface ketQuaInterface {
     ketQua: SachModels[];

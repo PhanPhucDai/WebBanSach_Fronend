@@ -5,10 +5,10 @@ class GioHang {
    soluong: number;
    sach: number;
    gioHang: number;
-   isChecked: boolean;
+   isChecked: number;
    tongTienItem: number;
  
-   constructor(maGiohang: number, soLuong: number, sach: number, gioHang: number, isChecked: boolean , tongTienItem: number) {
+   constructor(maGiohang: number, soLuong: number, sach: number, gioHang: number, isChecked: number , tongTienItem: number= 0) {
      this.maChiTietGioHang = maGiohang;
      this.soluong = soLuong;
      this.sach = sach;
@@ -16,6 +16,8 @@ class GioHang {
      this.isChecked = isChecked;
      this.tongTienItem = tongTienItem;
    }
+
+  
  }
  
  export default GioHang;
