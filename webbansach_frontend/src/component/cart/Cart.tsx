@@ -170,7 +170,7 @@ const Cart: React.FC<GioHanginter> = ({ xoaSanPhamTrongGioHang }) => {
                 <div className="col-6"><h5 className="text-center text-danger">{dinhDang(tongTien)}đ </h5></div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   {tongTien > 0 ? (
-                    <Link to="/thanh-toan" style={{ textDecoration: "none" }}>
+                    <Link to="/thanh-toan" state={{tongTien}} style={{ textDecoration: "none" }}>
                       <button
                         className="btn btn-danger mt-3 mb-2"
                         style={{

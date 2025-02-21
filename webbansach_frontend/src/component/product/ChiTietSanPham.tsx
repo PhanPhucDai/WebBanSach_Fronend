@@ -154,8 +154,8 @@ const ChiTietSanPham: React.FC = ({ }) => {
                                 </div>
                             )
                         }
-                        <button className="btn btn-danger mt-3">Mua ngay</button>
-                        <button className="btn btn-outline-secondary mt-3 ms-3" >Thêm vào giỏ hàng</button>
+                        <button type="button" className="btn btn-danger mt-3">Mua ngay</button>
+                        <button type="button" className="btn btn-outline-secondary mt-3 ms-3" >Thêm vào giỏ hàng</button>
 
                     </div>
                 </div>

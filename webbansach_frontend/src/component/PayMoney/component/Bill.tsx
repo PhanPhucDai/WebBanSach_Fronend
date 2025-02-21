@@ -3,35 +3,34 @@ import { dinhDang } from "../../utils/DinhDangSo";
 
 interface phiGiaoHanginter{
     phiGiaoHang: number;
+    tongTien: number;
+    checkTrim: () => void;
 }
 
-const Bill  :React.FC<phiGiaoHanginter> = ({phiGiaoHang}) => {
+const Bill  :React.FC<phiGiaoHanginter> = ({phiGiaoHang, tongTien, checkTrim}) => {
 
     return (
-        <div className="container bg-white border border-dark rounded-2 pe-5">
+        <div className="container bg-white border  rounded-2 pe-5">
             <div className="row">
                 <div className="col text-end mb-2">
-                    <span className="me-2">Thành tiền:</span>
-                    <span>1 <b>đ</b></span>
+                    <span className="me-2">Thành tiền:   <b>{dinhDang(tongTien)}đ</b></span>
                 </div>
             </div>
             <div className="row">
                 <div className="col text-end mb-2">
-                    <span className="me-2">Phí giao hàng:   <b>{dinhDang(phiGiaoHang)}đ</b></span>
-                  
+                    <span className="me-2">Phí giao hàng:   <b>{dinhDang(phiGiaoHang)}đ</b></span> 
                 </div>
             </div>
             <div className="row">
                 <div className="col text-end">
-                    <span className="me-2 fw-bold">Tổng tiền:</span>
-                    <span className="fw-bold">1 <b>đ</b></span>
+                    <span className="me-2 fw-bold">Tổng tiền:   <b>{dinhDang(phiGiaoHang+tongTien)}đ</b></span>
                 </div>
             </div>
 
             <hr />
 
             <div className="text-end">
-                <button type="button" className="btn btn-danger">Thanh toán</button>
+                <button onClick={checkTrim} type="button" className="btn btn-danger">Thanh toán</button>
             </div>
         </div>
 

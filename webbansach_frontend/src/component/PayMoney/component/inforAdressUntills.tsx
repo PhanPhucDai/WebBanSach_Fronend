@@ -5,16 +5,20 @@ import layDanhSachTinh, { layDanhSachHuyen, layDanhSachXa } from "../../../api/D
 import HuyenModel from "../../../models/HuyenModel";
 import XaModel from "../../../models/Xa";
 import { tinhTienGiaoHangAPI } from "../../../api/TinhTienGiaoHang";
-
-interface inforUser {
-    tenNguoiDung: String;
- }
-
-interface phiGiaoHang {
-    setPhiGiaoHang: (phi: number) => void;
+interface useRefAddress {
+    tinh: React.RefObject<HTMLSelectElement>;
+    huyen: React.RefObject<HTMLSelectElement>
+    xa: React.RefObject<HTMLSelectElement>
+    addressDeitail: React.RefObject<HTMLInputElement>
 }
 
-const InforAddress : React.FC<phiGiaoHang> = ({setPhiGiaoHang}) => {
+interface InforAddressProps {
+    setPhiGiaoHang: (phi: number) => void;
+    useRefAddress: useRefAddress;
+}
+
+
+const InforAddress: React.FC<InforAddressProps> = ({ setPhiGiaoHang, useRefAddress }) => {
     const [tenNguoiDung, setTenNguoiDung] = useState('');
     const [email, setEmail] = useState('');
     const [soDienThoai, setSoDienThoai] = useState(0);
@@ -133,7 +137,7 @@ const InforAddress : React.FC<phiGiaoHang> = ({setPhiGiaoHang}) => {
                 <div className="row mt-2">
                     <label htmlFor="" className="col-12 col-md-2 fw-bold">Tỉnh/Thành Phố:</label>
                     <div className="col-md-10 ">
-                        <select className="form-select" aria-label="Default select example" onChange={layHuyen}  >
+                        <select className="form-select" aria-label="Default select example" onChange={layHuyen} ref={useRefAddress.tinh} >
                             <option selected value={'T0'} >Tỉnh/ Thành phố</option>
                             {tinh.map((tinh) => (<option value={tinh.ProvinceID} >{tinh.ProvinceName}</option>))}
                         </select>
@@ -142,7 +146,7 @@ const InforAddress : React.FC<phiGiaoHang> = ({setPhiGiaoHang}) => {
                 <div className="row mt-2">
                     <label htmlFor="" className="col-12 col-md-2 fw-bold">Quận/Huyện:</label>
                     <div className="col-md-10 ">
-                        <select className="form-select" aria-label="Default select example" disabled={tinhIsSelected === 'T0'} onChange={layXa}>
+                        <select ref={useRefAddress.huyen}  className="form-select" aria-label="Default select example" disabled={tinhIsSelected === 'T0'} onChange={layXa}>
                             <option selected={tinhIsSelected === 'T0' ? true : false} value={'T0'}>Huyện/ Quận</option>
                             {huyen.map((huyen) => (<option key={huyen.DistrictID} value={huyen.DistrictID}>{huyen.DistrictName}</option>))}
                         </select>
@@ -152,10 +156,11 @@ const InforAddress : React.FC<phiGiaoHang> = ({setPhiGiaoHang}) => {
                     <label htmlFor="" className="col-12 col-md-2 fw-bold">Phường/Xã:</label>
                     <div className="col-md-10">
                         <select
+                            ref={useRefAddress.xa} 
                             className="form-select"
                             aria-label="Default select example"
-                            disabled={huyenIsSelected === 'H0'} // Disable khi huyện chưa chọn
-                            value={xaIsSelected} // Giữ giá trị đã chọn
+                            disabled={huyenIsSelected === 'H0'}  
+                            value={xaIsSelected} 
                             onChange={(e) => setXaIsSelected(e.target.value)}>
                             <option value="H0" selected={xaIsSelected === 'H0'}>Xã</option>
                             {xa.map((x) => (
@@ -168,7 +173,7 @@ const InforAddress : React.FC<phiGiaoHang> = ({setPhiGiaoHang}) => {
                 <div className="row mt-2">
                     <label htmlFor="" className="col-12  col-md-2 fw-bold">Địa chỉ nhận hàng:</label>
                     <div className="col-md-10 ">
-                        <input type="text" onChange={(e) => { setDiaChiChiTiet(e.target.value) }} value={diaChiChiTiet} placeholder="Địa chỉ nhận hàng" className="form-control  rounded-2 shadow-sm border border-secondary" />
+                        <input type="text" ref={useRefAddress.addressDeitail} onChange={(e) => { setDiaChiChiTiet(e.target.value) }} value={diaChiChiTiet} placeholder="Địa chỉ nhận hàng" className="form-control  rounded-2 shadow-sm border border-secondary" />
                     </div>
                 </div>
             </div>

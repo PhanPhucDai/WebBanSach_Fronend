@@ -18,8 +18,7 @@ interface ChiTietGioHangProps {
 
 const ComponentCheckBill: React.FC<ChiTietGioHangProps> = ({ Sach }) => {
   const maSach: number = Sach.sach;
-  console.log(maSach);
-  const [danhSachAnh, setDanhSachAnh] = useState<HinhAnhModels[]>([]);
+   const [danhSachAnh, setDanhSachAnh] = useState<HinhAnhModels[]>([]);
   const [error, setError] = useState('');
   const [duLieuSach, setduLieuSach] = useState<SachModels>();
   const [duLieuAnh, setDuLieuAnh] = useState('');
